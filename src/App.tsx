@@ -112,13 +112,24 @@ const ToolBadge: React.FC<ToolBadgeProps> = ({
   );
 };
 
-// Reusable Intersection Observer Hook
-const useScrollReveal = (threshold = 0.1) => {
+// Reusable Intersection Observer Hook with immediate viewport check
+const useScrollReveal = (threshold = 0.05) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    // Immediately reveal if already in or near viewport
+    const rect = el.getBoundingClientRect();
+    if (rect.top <= (window.innerHeight || document.documentElement.clientHeight) + 100) {
+      el.classList.add("visible");
+    }
+
+    if (!("IntersectionObserver" in window)) {
+      el.classList.add("visible");
+      return;
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -126,7 +137,7 @@ const useScrollReveal = (threshold = 0.1) => {
           el.classList.add("visible");
         }
       },
-      { threshold }
+      { threshold, rootMargin: "80px" }
     );
 
     observer.observe(el);

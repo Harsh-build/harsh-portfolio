@@ -4,8 +4,20 @@ import path from 'path';
 import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
+  // Automatically detect GitHub Pages repository name in GitHub Actions environment
+  // e.g. GITHUB_REPOSITORY = "kumarharsh0720/portfolio" -> repoName = "portfolio"
+  const repoName = process.env.GITHUB_REPOSITORY ? process.env.GITHUB_REPOSITORY.split('/')[1] : '';
+  const isUserPage = repoName.toLowerCase().endsWith('.github.io');
+  
+  // If VITE_BASE_URL is set, use it; otherwise use repo path in GitHub Actions, or fallback to relative './'
+  const base = process.env.VITE_BASE_URL
+    ? process.env.VITE_BASE_URL
+    : process.env.GITHUB_REPOSITORY
+      ? (isUserPage ? '/' : `/${repoName}/`)
+      : './';
+
   return {
-    base: './',
+    base,
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {

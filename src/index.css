@@ -111,13 +111,24 @@ body {
 
 .section-reveal {
   opacity: 0;
-  transition: opacity .7s, transform .7s;
-  transform: translateY(30px);
+  transition: opacity .6s cubic-bezier(0.16, 1, 0.3, 1), transform .6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(24px);
+  will-change: opacity, transform;
 }
 
+/* Hero section is always visible immediately upon load */
+#hero.section-reveal,
 .section-reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 .orange-glow {
