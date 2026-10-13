@@ -1,0 +1,6 @@
+{
+  "name": "Harsh Portfolio",
+  "description": "Harsh Portfolio - Personal portfolio of Harsh, professional Video Editor and Thumbnail Designer featuring cinematic video editing, YouTube thumbnails, short-form reels, and custom thumbnail design.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

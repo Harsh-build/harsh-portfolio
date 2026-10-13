@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+:root {
+  --background-50: .07 0 0;
+  --background-100: .1 0 0;
+  --background-200: .14 0 0;
+  --background-300: .2 0 0;
+  --background-400: .28 0 0;
+  --background-500: .38 0 0;
+  --background-600: .5 0 0;
+  --background-700: .62 0 0;
+  --background-800: .74 0 0;
+  --background-900: .86 0 0;
+  --background-950: .95 0 0;
+  --primary-50: .18 .05 40;
+  --primary-100: .28 .08 40;
+  --primary-200: .38 .12 40;
+  --primary-300: .5 .16 40;
+  --primary-400: .6 .2 40;
+  --primary-500: .67 .23 40;
+  --primary-600: .6 .21 38;
+  --primary-700: .52 .18 37;
+  --primary-800: .42 .14 36;
+  --primary-900: .3 .09 35;
+  --primary-950: .2 .06 35;
+  --accent-50: .18 .04 88;
+  --accent-100: .28 .07 88;
+  --accent-200: .45 .1 88;
+  --accent-300: .6 .14 88;
+  --accent-400: .75 .17 88;
+  --accent-500: .86 .19 88;
+  --accent-600: .78 .17 85;
+  --accent-700: .66 .14 83;
+  --accent-800: .52 .1 80;
+  --accent-900: .36 .07 78;
+  --accent-950: .22 .04 76;
+  --secondary-50: .16 .02 45;
+  --secondary-100: .22 .03 45;
+  --secondary-200: .3 .04 45;
+  --secondary-300: .4 .05 45;
+  --secondary-400: .5 .06 45;
+  --secondary-500: .6 .07 45;
+  --secondary-600: .52 .06 44;
+  --secondary-700: .44 .05 43;
+  --secondary-800: .34 .04 42;
+  --secondary-900: .24 .03 41;
+  --secondary-950: .14 .02 40;
+  --foreground-50: .18 0 0;
+  --foreground-100: .28 0 0;
+  --foreground-200: .38 0 0;
+  --foreground-300: .5 0 0;
+  --foreground-400: .62 0 0;
+  --foreground-500: .7 0 0;
+  --foreground-600: .76 0 0;
+  --foreground-700: .82 0 0;
+  --foreground-800: .88 0 0;
+  --foreground-900: .94 0 0;
+  --foreground-950: .98 0 0;
+  --font-heading: "Anton", "Impact", sans-serif;
+  --font-body: "Inter", "Poppins", sans-serif;
+  --font-label: "Inter", sans-serif;
+  --font-script: "Pacifico", cursive;
+}
+
+@theme {
+  --color-primary-50: oklch(var(--primary-50));
+  --color-primary-100: oklch(var(--primary-100));
+  --color-primary-200: oklch(var(--primary-200));
+  --color-primary-300: oklch(var(--primary-300));
+  --color-primary-400: oklch(var(--primary-400));
+  --color-primary-500: oklch(var(--primary-500));
+  --color-primary-600: oklch(var(--primary-600));
+  --color-primary-700: oklch(var(--primary-700));
+  --color-primary-800: oklch(var(--primary-800));
+  --color-primary-900: oklch(var(--primary-900));
+  --color-primary-950: oklch(var(--primary-950));
+
+  --color-foreground-50: oklch(var(--foreground-50));
+  --color-foreground-100: oklch(var(--foreground-100));
+  --color-foreground-200: oklch(var(--foreground-200));
+  --color-foreground-300: oklch(var(--foreground-300));
+  --color-foreground-400: oklch(var(--foreground-400));
+  --color-foreground-500: oklch(var(--foreground-500));
+  --color-foreground-600: oklch(var(--foreground-600));
+  --color-foreground-700: oklch(var(--foreground-700));
+  --color-foreground-800: oklch(var(--foreground-800));
+  --color-foreground-900: oklch(var(--foreground-900));
+  --color-foreground-950: oklch(var(--foreground-950));
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: oklch(var(--background-50));
+  color: oklch(var(--foreground-950));
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+.noise-overlay:before {
+  content: "";
+  pointer-events: none;
+  z-index: 1;
+  opacity: .06;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  position: absolute;
+  inset: 0;
+}
+
+.section-reveal {
+  opacity: 0;
+  transition: opacity .7s, transform .7s;
+  transform: translateY(30px);
+}
+
+.section-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.orange-glow {
+  text-shadow: 0 0 30px rgba(255,107,0,0.5), 0 0 60px rgba(255,107,0,0.2);
+}
+
+.card-hover {
+  transition: transform .3s, box-shadow .3s;
+}
+
+.card-hover:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(255, 107, 0, 0.2);
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: 3s ease-in-out infinite float;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px 2px rgba(255,107,0,0.4);
+  }
+  50% {
+    box-shadow: 0 0 22px 6px rgba(255,107,0,0.7);
+  }
+}
+
+.animate-pulse-glow {
+  animation: 2s ease-in-out infinite pulseGlow;
+}
