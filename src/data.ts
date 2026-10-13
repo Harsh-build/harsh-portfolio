@@ -10,6 +10,7 @@ export const Mo: NavItem[] = [
   { href: "#skills", label: "Skills" },
   { href: "#work", label: "Work" },
   { href: "#thumbnail-designs", label: "Designs" },
+  { href: "#faq", label: "FAQ" },
   { href: "#contact", label: "Contact" }
 ];
 
@@ -220,4 +221,65 @@ export const socialLinks = {
   youtube: "https://youtube.com/shorts/mJdeQjk0GuU",
   email: "kumarharsh0720@gmail.com"
 };
+
+export interface FAQItem {
+  id: number;
+  category: "workflow" | "turnaround" | "collaboration";
+  categoryLabel: string;
+  question: string;
+  answer: string;
+  icon: string;
+}
+
+export const faqList: FAQItem[] = [
+  {
+    id: 1,
+    category: "workflow",
+    categoryLabel: "Workflow",
+    question: "What is your video editing workflow from raw footage to final export?",
+    answer: "My workflow follows a structured 5-step process: 1) Footage review & audio sync, 2) Storyline rough cut & pacing assembly, 3) Dynamic sound design, B-roll & engaging visual hooks, 4) Color grading, motion graphics & animated subtitles, and 5) Quality check & high-bitrate export tailored for YouTube (1440p/4K) or vertical platforms (9:16 1080p).",
+    icon: "ri-film-line"
+  },
+  {
+    id: 2,
+    category: "turnaround",
+    categoryLabel: "Turnaround Time",
+    question: "What is your typical turnaround time for videos and thumbnails?",
+    answer: "For Short-form content (Instagram Reels, YouTube Shorts, TikToks), turnaround is typically 24 to 48 hours. Long-form YouTube videos (8-15 mins) usually take 3 to 5 business days depending on visual effects complexity. High-CTR YouTube thumbnails are delivered within 24 hours.",
+    icon: "ri-timer-flash-line"
+  },
+  {
+    id: 3,
+    category: "collaboration",
+    categoryLabel: "Collaboration",
+    question: "How do we collaborate, share files, and communicate during a project?",
+    answer: "We communicate seamlessly via Email or Instagram DM. You can share raw assets, brand guidelines, and scripts through Google Drive, Dropbox, or WeTransfer. I provide preview links with timestamped checkpoints so you can review and give instant feedback.",
+    icon: "ri-team-line"
+  },
+  {
+    id: 4,
+    category: "workflow",
+    categoryLabel: "Workflow",
+    question: "Which editing software and tools do you use?",
+    answer: "I utilize industry-standard software: CapCut (PC & Mobile) and Filmora for snappy pacing, viral captions, and modern transitions; Adobe Photoshop PC for pixel-perfect thumbnail composition and photo manipulation; and PicsArt Mobile for rapid creative touchups.",
+    icon: "ri-macbook-line"
+  },
+  {
+    id: 5,
+    category: "collaboration",
+    categoryLabel: "Collaboration",
+    question: "Are revisions included if I need adjustments made?",
+    answer: "Yes, absolutely! Every project includes 2 to 3 rounds of free revisions to ensure pacing, music choices, text positioning, and color grading match your creative vision 100%. Any minor tweaks are completed quickly.",
+    icon: "ri-loop-right-line"
+  },
+  {
+    id: 6,
+    category: "turnaround",
+    categoryLabel: "Turnaround Time",
+    question: "Do you offer rush or urgent delivery options?",
+    answer: "Yes! If you have a time-sensitive upload or breaking news topic, same-day express delivery (within 12 to 24 hours) is available upon request for both short-form edits and thumbnails.",
+    icon: "ri-flashlight-line"
+  }
+];
+
 

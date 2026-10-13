@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Mo, Lo, Bo, Ho, Go, Uo, softwareSkills, socialLinks } from "./data";
+import { Mo, Lo, Bo, Ho, Go, Uo, softwareSkills, socialLinks, faqList } from "./data";
+import { Chatbot } from "./components/Chatbot";
 
 
 // Wave shape component corresponding to original 'H' function
@@ -158,6 +159,10 @@ export default function App() {
   const [activeVideo, setActiveVideo] = useState<{ title: string; url: string } | null>(null);
   const [videoError, setVideoError] = useState(false);
 
+  // FAQ accordion and filter state
+  const [activeFaqCategory, setActiveFaqCategory] = useState<string>("all");
+  const [openFaqId, setOpenFaqId] = useState<number | null>(1); // default first FAQ open
+
   // Scroll handler for navbar
   useEffect(() => {
     const handleScroll = () => {
@@ -182,6 +187,7 @@ export default function App() {
   const skillsRevealRef = useScrollReveal(0.12);
   const workRevealRef = useScrollReveal(0.08);
   const designRevealRef = useScrollReveal(0.08);
+  const faqRevealRef = useScrollReveal(0.08);
   const contactRevealRef = useScrollReveal(0.08);
 
   return (
@@ -1008,7 +1014,163 @@ export default function App() {
         </div>
       </section>
 
-      {/* 8. Contact Section & Footer */}
+      {/* 8. FAQ Section */}
+      <section
+        ref={faqRevealRef}
+        id="faq"
+        className="section-reveal relative py-20 md:py-28 px-6 md:px-16 overflow-hidden"
+        style={{ backgroundColor: "#0e0e11" }}
+      >
+        {/* Subtle decorative glow & accents */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: "radial-gradient(ellipse 70% 50% at 50% 30%, rgba(255,107,0,0.06) 0%, transparent 70%)",
+          }}
+        ></div>
+        <Wave className="absolute top-8 left-6 opacity-20 pointer-events-none" width={140} height={28} strokeWidth={2.5} />
+        <Wave className="absolute bottom-8 right-6 opacity-20 pointer-events-none" width={140} height={28} strokeWidth={2.5} />
+
+        <div className="relative z-10 max-w-4xl mx-auto">
+          {/* Section Header */}
+          <div className="text-center mb-14">
+            <span
+              className="text-[#FF6B00] text-xl md:text-2xl block mb-2"
+              style={{ fontFamily: "Pacifico, cursive" }}
+            >
+              Got Questions?
+            </span>
+            <h2
+              className="text-4xl md:text-6xl font-heading text-white tracking-tight uppercase"
+              style={{ fontFamily: "Anton, Impact, sans-serif" }}
+            >
+              FREQUENTLY ASKED <span className="text-[#FF6B00]">QUESTIONS</span>
+            </h2>
+            <p className="text-foreground-500 font-body text-sm md:text-base mt-4 max-w-xl mx-auto leading-relaxed">
+              Everything you need to know about my video editing workflow, turnaround timelines, software tools, and collaboration process.
+            </p>
+
+            {/* Category Filter Pills */}
+            <div className="flex flex-wrap items-center justify-center gap-2 mt-8">
+              {[
+                { key: "all", label: "All Questions", icon: "ri-apps-line" },
+                { key: "workflow", label: "Workflow & Tools", icon: "ri-film-line" },
+                { key: "turnaround", label: "Turnaround Time", icon: "ri-timer-flash-line" },
+                { key: "collaboration", label: "Collaboration & Revisions", icon: "ri-team-line" },
+              ].map((tab) => {
+                const isActive = activeFaqCategory === tab.key;
+                return (
+                  <button
+                    key={tab.key}
+                    onClick={() => setActiveFaqCategory(tab.key)}
+                    className={`cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-body font-semibold tracking-wide uppercase transition-all duration-200 border ${
+                      isActive
+                        ? "bg-[#FF6B00] text-white border-[#FF6B00] shadow-[0_0_15px_rgba(255,107,0,0.35)]"
+                        : "bg-[#141418] text-foreground-400 border-white/10 hover:text-white hover:border-[#FF6B00]/40"
+                    }`}
+                  >
+                    <i className={`${tab.icon} text-sm`}></i>
+                    {tab.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Accordion List */}
+          <div className="space-y-4">
+            {faqList
+              .filter((item) => activeFaqCategory === "all" || item.category === activeFaqCategory)
+              .map((item) => {
+                const isOpen = openFaqId === item.id;
+                return (
+                  <div
+                    key={item.id}
+                    className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
+                      isOpen
+                        ? "bg-[#15151c] border-[#FF6B00]/50 shadow-[0_4px_24px_rgba(255,107,0,0.12)]"
+                        : "bg-[#121216] border-white/10 hover:border-white/20"
+                    }`}
+                  >
+                    <button
+                      onClick={() => setOpenFaqId(isOpen ? null : item.id)}
+                      className="cursor-pointer w-full text-left p-5 md:p-6 flex items-start justify-between gap-4 select-none focus:outline-none"
+                      aria-expanded={isOpen}
+                    >
+                      <div className="flex items-center gap-4">
+                        <div
+                          className={`w-10 h-10 shrink-0 rounded-xl flex items-center justify-center transition-colors duration-200 ${
+                            isOpen
+                              ? "bg-[#FF6B00] text-white"
+                              : "bg-white/5 text-[#FF6B00]"
+                          }`}
+                        >
+                          <i className={`${item.icon} text-lg`}></i>
+                        </div>
+                        <div>
+                          <span
+                            className="text-[10px] uppercase font-bold tracking-widest block mb-0.5"
+                            style={{ color: isOpen ? "#FF6B00" : "rgba(255,255,255,0.4)" }}
+                          >
+                            {item.categoryLabel}
+                          </span>
+                          <h3 className="text-white text-base md:text-lg font-heading tracking-wide">
+                            {item.question}
+                          </h3>
+                        </div>
+                      </div>
+
+                      <div
+                        className={`w-8 h-8 shrink-0 rounded-full flex items-center justify-center border transition-all duration-300 ${
+                          isOpen
+                            ? "bg-[#FF6B00]/20 border-[#FF6B00] text-[#FF6B00] rotate-180"
+                            : "bg-white/5 border-white/10 text-foreground-400 rotate-0"
+                        }`}
+                      >
+                        <i className="ri-arrow-down-s-line text-lg"></i>
+                      </div>
+                    </button>
+
+                    {isOpen && (
+                      <div className="px-5 pb-6 pt-0 md:px-6 md:pb-6 ml-14 pr-6">
+                        <div className="pt-3 border-t border-white/10">
+                          <p className="text-foreground-400 font-body text-sm md:text-base leading-relaxed">
+                            {item.answer}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+          </div>
+
+          {/* Quick Contact Prompt inside FAQ */}
+          <div className="mt-12 p-6 md:p-8 rounded-2xl bg-gradient-to-r from-[#181820] to-[#141419] border border-[#FF6B00]/20 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+            <div>
+              <h4 className="text-white text-lg font-heading tracking-wide">
+                Have a unique project or custom requirement?
+              </h4>
+              <p className="text-foreground-500 font-body text-xs md:text-sm mt-1">
+                Reach out directly via Instagram or Email for a personalized quote and timeline.
+              </p>
+            </div>
+            <a
+              href="#contact"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection("#contact");
+              }}
+              className="cursor-pointer whitespace-nowrap inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#FF6B00] text-white font-body font-bold text-xs md:text-sm uppercase tracking-wider transition-transform duration-200 hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(255,107,0,0.3)]"
+            >
+              <i className="ri-chat-1-fill text-base"></i>
+              Get in Touch
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* 9. Contact Section & Footer */}
       <section
         ref={contactRevealRef}
         id="contact"
@@ -1263,6 +1425,9 @@ export default function App() {
           </div>
         </div>
       )}
+
+      {/* Floating Gemini Chatbot for Video Editing & Thumbnail Consultation */}
+      <Chatbot />
     </div>
   );
 }
